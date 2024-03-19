@@ -8,12 +8,13 @@ const discription = new mongoose.Schema({
         require:true
 
     },
-    image:{
-      type:String,
-      require:true
-    },
+    images: [{
+        type: String,
+        required: true
+    }],
     description:{
-        type:String
+        type:String,
+        require:true
        
     }
    

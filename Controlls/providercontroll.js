@@ -67,3 +67,21 @@ exports.workerLogin = async(req,res)=>{
         res.status(401).json(error)
     }
   }
+
+  //search workers
+  exports.searchProviders = async (req, res) => {
+    
+    const { worktype, district } = req.query;
+
+    try {
+        // Search providers based on worktype and district
+        const searchResults = await providers.find({
+            worktype: { $regex: new RegExp(worktype, "i") },
+            district: { $regex: new RegExp(district, "i") }  
+        });
+
+        res.status(200).json(searchResults);
+    } catch (error) {
+        res.status(500).json({ error: 'Search failed', message: error.message });
+    }
+};

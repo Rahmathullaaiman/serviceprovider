@@ -29,7 +29,7 @@ router.post('/provider/register',multerconfig.single('image'),providercontroll.R
 //service provider login
 router.post('/provider/login',providercontroll.workerLogin)
 //added description
-router.post('/description/add',multerconfig.single('image'),wordcontroll.descriptions)
+router.post('/description/add', multerconfig.array('images', 5), wordcontroll.descriptions);
 //get descriptions
 router.get('/description/get',wordcontroll.getDescriptions)
 //get workers
@@ -40,6 +40,8 @@ router.delete('/deleteworker/:id',jwtmiddleware,providercontroll.deleteWorker)
 router.get('/user/get', usercontroll.getAllusers)
 //delete users
 router.delete('/deleteuser/:id',jwtmiddleware,usercontroll.deleteuser)
+//search providers
+router.get('/search',providercontroll.searchProviders);
 
 
 
