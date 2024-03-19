@@ -4,71 +4,66 @@ const providers = require('../Modal/provider')
 const jwt = require('jsonwebtoken')
 
 
-//register user
-exports.registerprovider = async (req, res) => {
-    console.log('register inside');
+//register provider
+exports.Registerprovider = async(req,res)=>{
 
-    const userimage = req.file.filename;
-    console.log(userimage);
-
-    const { address, contactnumber, organisation, email, password } = req.body;
-    console.log(`${address},${contactnumber},${organisation},${email},${password}`);
-
+    const {name,email,mobileno,district,worktype,description,password} = req.body
+    const image = req.file.filename
+    
     try {
-        const userreg = await providers.findOne({ email });
-        if (userreg) {
-            res.status(406).json('Account already exists. Please login.');
-        } else {
-            
-            if (!/^\d{10}$/.test(contactnumber)) {
-                res.status(400).json('Please enter a 10-digit contact number.');
-                return; 
-            }
-
-            const newuser = new providers({
-                userimage,
-                address,
-                contactnumber,
-                organisation,
-                email,
-                password
-            });
-
-            await newuser.save();
-
-            res.status(200).json(newuser);
+        const provider = await providers.findOne({email})
+        if(provider){
+            res.status(406).json('Account already exist...Please Login')
         }
-    } catch (error) {
+        else{
+            const newprovider = new providers({
+                name,email,mobileno,image,district,worktype,description,password
+            })
+            await newprovider.save()
+            res.status(200).json(newprovider)
+        }
         
-        console.error(error);
-        res.status(500).json('Internal server error');
+    } catch (error) {
+        res.status(401).json(`Registration failed due to ${error}`)
     }
-};
 
-//login user
+}
 
-exports.loginprovider =async (req,res)=>{
-    const{email,password} = req.body
+//login worker
 
+exports.workerLogin = async(req,res)=>{
+    const {email,password} = req.body
+  
    try{ 
-      const existuser =await providers.findOne({email,password})
-    console.log(existuser);
-
-    if(existuser){
-          //jwt token
-        //payload-information is secretely transmitted
-        //secret or private
-        const token = jwt.sign({userId:existuser._id},"supersecretkey")
-
-        res.status(200).json({
-            existuser,
-            token
-        })
+    const existworker = await providers.findOne({email,password})
+  
+    if(existworker){
+      const token = jwt.sign({userid:existworker._id},"supersecretkey")
+      res.status(200).json({existworker,token})
     }
     else{
-        res.status(404).json('invalid emailID or password')
+  res.status(404).json('Invalid email or password')
+    }}catch(err){
+      res.status(401).json(`login failed due to ${err}`)
     }
-}catch(err){
-    res.status(401).json(`login request failed due to ${err}`);
-}
-}
+  }
+
+  //get all providers
+  exports.getAllWorkers = async(req,res)=>{
+    try {
+     const allWorkers = await providers.find()
+     res.status(200).json(allWorkers)
+    } catch (err) {
+     res.status(401).json(`Request failed due to ${err}`)
+    }
+  }
+
+  exports.deleteWorker = async(req,res)=>{
+    const {id} = req.params
+    try {
+        const removeWorker = await providers.findByIdAndDelete({_id:id})
+        res.status(200).json(removeWorker)
+    } catch (error) {
+        res.status(401).json(error)
+    }
+  }
