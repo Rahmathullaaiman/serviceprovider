@@ -27,12 +27,6 @@ const usersheme = new mongoose.Schema({
             message: props => `${props.value} is not a valid 10-digit number!`
         }
     },
-
-    organisation:{
-        type:String,
-        require:true,
-        min:[3,'must be atleast 3 character but got {VALUE}']
-    },
     email:{
         type:String,
         require:true,

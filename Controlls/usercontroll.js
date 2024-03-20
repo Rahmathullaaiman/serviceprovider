@@ -11,8 +11,8 @@ exports.registeruser = async (req, res) => {
     const userimage = req.file.filename;
     console.log(userimage);
 
-    const { name,address, contactnumber, organisation, email, password } = req.body;
-    console.log(`${name},${address},${contactnumber},${organisation},${email},${password}`);
+    const { name,address, contactnumber, email, password } = req.body;
+    console.log(`${name},${address},${contactnumber},${email},${password}`);
 
     try {
         const userreg = await users.findOne({ email });
@@ -30,7 +30,6 @@ exports.registeruser = async (req, res) => {
                 userimage,
                 address,
                 contactnumber,
-                organisation,
                 email,
                 password
             });
