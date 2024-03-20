@@ -35,6 +35,10 @@ const providerSchema = new mongoose.Schema({
      password:{
         type:String,
         required:true
+     },
+     price:{
+      type:Number,
+      require:true
      }
 })
 

@@ -11,8 +11,8 @@ exports.registeruser = async (req, res) => {
     const userimage = req.file.filename;
     console.log(userimage);
 
-    const { address, contactnumber, organisation, email, password } = req.body;
-    console.log(`${address},${contactnumber},${organisation},${email},${password}`);
+    const { name,address, contactnumber, organisation, email, password } = req.body;
+    console.log(`${name},${address},${contactnumber},${organisation},${email},${password}`);
 
     try {
         const userreg = await users.findOne({ email });
@@ -26,6 +26,7 @@ exports.registeruser = async (req, res) => {
             }
 
             const newuser = new users({
+                name,
                 userimage,
                 address,
                 contactnumber,
@@ -114,3 +115,51 @@ exports.getAllusers = async(req,res)=>{
         res.status(401).json(error)
     }
   }
+
+  //edit user profile
+  exports.edituser = async (req, res) => {
+    const { id } = req.params;
+    const { name, userimage, address, contactnumber, organisation } = req.body;
+    const uploadedimage = req.file ? req.file.filename : userimage;
+
+    try {
+    
+        const updateuser = await users.findByIdAndUpdate({_id:id}, 
+            { name, userimage: uploadedimage, address, contactnumber, organisation },
+            { new: true } 
+        );
+
+        
+        if (!updateuser) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(updateuser);
+    } catch (error) {
+        console.error(error); 
+        res.status(500).json({ error: "Internal server error" }); 
+    }
+}
+
+
+
+
+//   exports.edituser = async(req,res)=>{
+//     const {id} = req.params;
+//     const {name, address, contactnumber, organisation} = req.body;
+//     const uploadedImage = req.file ? req.file.filename : null;
+
+//     try {
+//         const updateUser = await users.findByIdAndUpdate({_id:id}, {
+//             name,
+//             address,
+//             contactnumber,
+//             organisation,
+//             ...(uploadedImage && { userimage: uploadedImage }) 
+//         }, { new: true });
+
+//         res.status(200).json(updateUser);
+//     } catch (error) {
+//         res.status(401).json(error);
+//     }
+// }

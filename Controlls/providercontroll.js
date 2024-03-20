@@ -9,6 +9,7 @@ exports.Registerprovider = async(req,res)=>{
 
     const {name,email,mobileno,district,worktype,description,password} = req.body
     const image = req.file.filename
+    const price = 1500;
     
     try {
         const provider = await providers.findOne({email})
@@ -17,7 +18,7 @@ exports.Registerprovider = async(req,res)=>{
         }
         else{
             const newprovider = new providers({
-                name,email,mobileno,image,district,worktype,description,password
+                name,email,mobileno,image,district,worktype,description,password,price
             })
             await newprovider.save()
             res.status(200).json(newprovider)
@@ -85,3 +86,22 @@ exports.workerLogin = async(req,res)=>{
         res.status(500).json({ error: 'Search failed', message: error.message });
     }
 };
+
+
+//update worker details
+exports.editWorker = async(req,res)=>{
+  const {id} = req.params
+  const {name,email,mobileno,district,worktype,description,password} = req.body
+  const uploadedimage = req.file?req.file.filename:image
+  const price = 1500;
+
+  try {
+      const updateWorker = await providers.findByIdAndUpdate({_id:id},{name,email,mobileno,image:uploadedimage,district,worktype,description,password,price
+      },{new:true})
+
+      await updateWorker.save()
+      res.status(200).json(updateWorker)
+  } catch (error) {
+      res.status(401).json(error)
+  }
+}

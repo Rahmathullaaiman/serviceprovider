@@ -8,6 +8,8 @@ const providercontroll = require('../Controlls/providercontroll')
 
 const wordcontroll = require('../Controlls/descriptions')
 
+const bookingcontroll = require('../Controlls/bookingcontroller')
+
 
 
 const multerconfig = require('../Middlewares/multer')
@@ -42,6 +44,26 @@ router.get('/user/get', usercontroll.getAllusers)
 router.delete('/deleteuser/:id',jwtmiddleware,usercontroll.deleteuser)
 //search providers
 router.get('/search',providercontroll.searchProviders);
+//booking workers
+router.post('/user/booking/:id',jwtmiddleware,bookingcontroll.bookingworker)
+//approve booking
+router.put('/worker/approvetrue/:id',jwtmiddleware,bookingcontroll.bookingapprove)
+//decline booking
+router.put('/worker/approvefalse/:id',jwtmiddleware,bookingcontroll.bookingdecline)
+//get all booking requests
+router.get('/getAllRequestsByWorkerId/:workerId',jwtmiddleware,bookingcontroll.getAllRequestsByWorkerId); 
+//get all bookings for user
+router.get('/getBookingsByUserId/:userId',jwtmiddleware,bookingcontroll.getBookingsByUserId); 
+//edit the worker
+router.put('/worker/update/:id',jwtmiddleware,multerconfig.single('image'),providercontroll.editWorker)
+//edit user
+router.put('/user/update/:id',jwtmiddleware,multerconfig.single('userimage'),usercontroll.edituser)
+
+
+
+
+
+
 
 
 

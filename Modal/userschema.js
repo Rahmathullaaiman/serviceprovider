@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
 
 //create scheme
 const usersheme = new mongoose.Schema({
+    name:{
+        type:String,
+        require:true
+    },
     userimage:{
         type:String,
         require:true
