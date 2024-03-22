@@ -5,27 +5,27 @@ const mongoose = require('mongoose')
 const BookingSchema = new mongoose.Schema({
      date:{
         type:String,
-        required:true
+        require:true
      },
      service:{
         type:String,
-        required:true
+        require:true
      },
      location:{
         type:String,
-        required:true
+        require:true
      },
      locationURL:{
       type:String,
-      required:true
+      require:true
      },
      userId:{
         type:String,
-        required:true
+        require:true
      },
      workerid:{
         type:String,
-        required:true
+        require:true
      },
      status:{
         type:Boolean

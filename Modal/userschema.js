@@ -19,7 +19,7 @@ const usersheme = new mongoose.Schema({
     },
     contactnumber: {
         type: Number,
-        required: true,
+        require: true,
         validate: {
             validator: function(v) {
                 return /^\d{10}$/.test(v); 
@@ -37,7 +37,8 @@ const usersheme = new mongoose.Schema({
         }
     },
     password:{
-        type:String
+        type:String,
+        require:true
        
     }
    

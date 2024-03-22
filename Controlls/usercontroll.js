@@ -118,13 +118,13 @@ exports.getAllusers = async(req,res)=>{
   //edit user profile
   exports.edituser = async (req, res) => {
     const { id } = req.params;
-    const { name, userimage, address, contactnumber, organisation } = req.body;
+    const { name, userimage, address, contactnumber } = req.body;
     const uploadedimage = req.file ? req.file.filename : userimage;
 
     try {
     
         const updateuser = await users.findByIdAndUpdate({_id:id}, 
-            { name, userimage: uploadedimage, address, contactnumber, organisation },
+            { name, userimage: uploadedimage, address, contactnumber },
             { new: true } 
         );
 

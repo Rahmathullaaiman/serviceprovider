@@ -1,4 +1,6 @@
 const bookings = require('../Modal/Booking')
+const providers = require('../Modal/provider')
+
 
 exports.bookingworker = async(req,res)=>{
 
@@ -18,6 +20,23 @@ exports.bookingworker = async(req,res)=>{
     }
 
 }
+
+//booking te worker
+
+// exports.bookingworker = async (req, res) => {
+//     const { date, service, location, locationURL, workerId } = req.body; 
+//     const userId = req.payload;
+//     try {
+//         const newBooking = new bookings({
+//             date, service, location, locationURL, workerid: workerId, userId, status: null
+//         });
+//         await newBooking.save();
+//         res.status(200).json(newBooking);
+//     } catch (error) {
+//         res.status(401).json(`Booking failed due to ${error}`);
+//     }
+// }
+
 
 //approving booking 
 exports.bookingapprove = async(req,res)=>{
@@ -47,7 +66,7 @@ exports.bookingapprove = async(req,res)=>{
 exports.getAllRequestsByWorkerId = async (req, res) => {
     const { workerId } = req.params;
     try {
-        const allBookings = await bookings.find({ workerid: workerId });
+        const allBookings = await providers.find({ workerid: workerId });
         res.status(200).json(allBookings);
     } catch (err) {
         res.status(401).json(`Request failed due to ${err}`);
@@ -65,3 +84,4 @@ exports.getBookingsByUserId = async (req, res) => {
         res.status(401).json(`Request failed due to ${err}`);
     }
 }
+

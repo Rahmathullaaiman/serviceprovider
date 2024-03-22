@@ -6,38 +6,42 @@ const providerSchema = new mongoose.Schema({
      
     name:{
         type:String,
-        required:true
+        require:true
      },
      email:{
         type:String,
-        required:true
+        require:true
      },
      mobileno:{
         type:Number,
-        required:true
+        require:true
      },
      image:{
         type:String,
-        required:true
+        require:true
      },
      district:{
         type:String,
-        required:true
+        require:true
      },
      worktype:{
         type:String,
-        required:true
+        require:true
      },
      description:{
       type:String,
-      required:true
+      require:true
      },
      password:{
         type:String,
-        required:true
+        require:true
      },
      price:{
       type:Number,
+      require:true
+     },
+     organisation:{
+      type:String,
       require:true
      }
 })
