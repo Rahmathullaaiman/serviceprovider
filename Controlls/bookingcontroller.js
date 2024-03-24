@@ -4,20 +4,24 @@ const providers = require('../Modal/provider')
 
 exports.bookingworker = async(req,res)=>{
 
-    const {date,service,location,locationURL} = req.body
-    const {id} = req.params
-    const userId = req.payload
+    const { date, service, location, locationURL } = req.body;
+    const { id } = req.params;
+    const userId = req.payload;
     try {
-            const newBooking = new bookings({
-                date,service,location,locationURL,userId,workerid:id,status:null
-            })
-            await newBooking.save()
-            res.status(200).json(newBooking)
-        
-        
+        const existingBooking = await bookings.findOne({ date, workerid: id });
+    
+        if (existingBooking) {
+            return res.status(400).json({ message: "This worker is already booked for this date." });
+        }
+        const newBooking = new bookings({
+            date, service, location, locationURL, userId, workerid: id, status: null
+        });
+        await newBooking.save();
+        res.status(200).json(newBooking);
     } catch (error) {
-        res.status(401).json(`Booking failed due to ${error}`)
+        res.status(500).json({ error: `Booking failed due to ${error}` });
     }
+    
 
 }
 
@@ -85,3 +89,15 @@ exports.getBookingsByUserId = async (req, res) => {
     }
 }
 
+
+//cancel booking
+
+exports.cancelbooking = async(req,res)=>{
+    const {id} = req.params
+    try {
+        const cancel = await bookings.findByIdAndDelete({_id:id})
+        res.status(200).json(cancel)
+    } catch (error) {
+        res.status(401).json(error)
+    }
+  }

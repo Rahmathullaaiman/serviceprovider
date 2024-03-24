@@ -143,22 +143,3 @@ exports.getAllusers = async(req,res)=>{
 
 
 
-//   exports.edituser = async(req,res)=>{
-//     const {id} = req.params;
-//     const {name, address, contactnumber, organisation} = req.body;
-//     const uploadedImage = req.file ? req.file.filename : null;
-
-//     try {
-//         const updateUser = await users.findByIdAndUpdate({_id:id}, {
-//             name,
-//             address,
-//             contactnumber,
-//             organisation,
-//             ...(uploadedImage && { userimage: uploadedImage }) 
-//         }, { new: true });
-
-//         res.status(200).json(updateUser);
-//     } catch (error) {
-//         res.status(401).json(error);
-//     }
-// }

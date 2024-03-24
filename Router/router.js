@@ -58,6 +58,8 @@ router.get('/getBookingsByUserId/:userId',jwtmiddleware,bookingcontroll.getBooki
 router.put('/worker/update/:id',jwtmiddleware,multerconfig.single('image'),providercontroll.editWorker)
 //edit user
 router.put('/user/update/:id',jwtmiddleware,multerconfig.single('userimage'),usercontroll.edituser)
+//cancel booking
+router.delete('/delete/booking/:id',jwtmiddleware,bookingcontroll.cancelbooking)
 
 
 
