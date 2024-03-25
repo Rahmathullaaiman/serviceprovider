@@ -53,7 +53,7 @@ router.put('/worker/approvefalse/:id',jwtmiddleware,bookingcontroll.bookingdecli
 //get all booking requests
 router.get('/getAllRequestsByWorkerId/:workerId',jwtmiddleware,bookingcontroll.getAllRequestsByWorkerId); 
 //get all bookings for user
-router.get('/getBookingsByUserId/:userId',jwtmiddleware,bookingcontroll.getBookingsByUserId); 
+router.get('/getBookingsByUserId',jwtmiddleware,bookingcontroll.getBookingsByUserId); 
 //edit the worker
 router.put('/worker/update/:id',jwtmiddleware,multerconfig.single('image'),providercontroll.editWorker)
 //edit user

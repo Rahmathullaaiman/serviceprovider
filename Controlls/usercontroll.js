@@ -74,25 +74,7 @@ exports.loginuser =async (req,res)=>{
 }
 
 
-//admin
-// exports.adminLogin = async (req, res) => {
-//     const { email, password } = req.body;
 
-//     try {
-//         const admin = await users.findOne({ Adminemail: email, Adminpswd: password });
-
-//         if (admin) {
-//             // Generating JWT token
-//             const token = jwt.sign({ userId: admin._id }, "secretkey");
-
-//             res.status(200).json({ admin, token });
-//         } else {
-//             res.status(404).json('Invalid email or password');
-//         }
-//     } catch (err) {
-//         res.status(500).json(`Login failed due to ${err}`);
-//     }
-// };
 
 //get alluser
 exports.getAllusers = async(req,res)=>{
