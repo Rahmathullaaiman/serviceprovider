@@ -1,5 +1,4 @@
 const bookings = require('../Modal/Booking')
-const providers = require('../Modal/provider')
 
 
 exports.bookingworker = async(req,res)=>{
@@ -11,7 +10,7 @@ exports.bookingworker = async(req,res)=>{
         const existingBooking = await bookings.findOne({ date, workerid: id });
     
         if (existingBooking) {
-            return res.status(400).json({ message: "This worker is already booked for this date." });
+            return res.status(400).json({ message: "This worker is already booked for this date.Please choose another date" });
         }
         const newBooking = new bookings({
             date, service, location, locationURL, userId, workerid: id, status: null
@@ -70,7 +69,7 @@ exports.bookingapprove = async(req,res)=>{
 exports.getAllRequestsByWorkerId = async (req, res) => {
     const { workerId } = req.params;
     try {
-        const allBookings = await providers.find({ workerid: workerId });
+        const allBookings = await bookings.find({ workerid: workerId });
         res.status(200).json(allBookings);
     } catch (err) {
         res.status(401).json(`Request failed due to ${err}`);
