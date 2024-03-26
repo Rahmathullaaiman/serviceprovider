@@ -67,9 +67,8 @@ exports.bookingapprove = async(req,res)=>{
  
  // get all bookings by worker id
 exports.getAllRequestsByWorkerId = async (req, res) => {
-    const { workerId } = req.params;
     try {
-        const allBookings = await bookings.find({ workerid: workerId });
+        const allBookings = await bookings.find();
         res.status(200).json(allBookings);
     } catch (err) {
         res.status(401).json(`Request failed due to ${err}`);

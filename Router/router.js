@@ -51,7 +51,7 @@ router.put('/worker/approvetrue/:id',jwtmiddleware,bookingcontroll.bookingapprov
 //decline booking
 router.put('/worker/approvefalse/:id',jwtmiddleware,bookingcontroll.bookingdecline)
 //get all booking requests
-router.get('/getAllRequestsByWorkerId/:workerId',jwtmiddleware,bookingcontroll.getAllRequestsByWorkerId); 
+router.get('/getAllRequestsByworker',jwtmiddleware,bookingcontroll.getAllRequestsByWorkerId); 
 //get all bookings for user
 router.get('/getBookingsByUserId',jwtmiddleware,bookingcontroll.getBookingsByUserId); 
 //edit the worker
