@@ -86,15 +86,14 @@ exports.workerLogin = async(req,res)=>{
     }
 };
 
-
 //update worker details
 exports.editWorker = async(req,res)=>{
   const {id} = req.params
-  const {name,email,mobileno,district,worktype,description,password,price,organisation} = req.body
+  const {name,mobileno,district,worktype,description,price,organisation} = req.body
   const uploadedimage = req.file?req.file.filename:image
 
   try {
-      const updateWorker = await providers.findByIdAndUpdate({_id:id},{name,email,mobileno,image:uploadedimage,district,worktype,description,password,price,organisation
+      const updateWorker = await providers.findByIdAndUpdate({_id:id},{name,mobileno,image:uploadedimage,district,worktype,description,price,organisation
       },{new:true})
 
       await updateWorker.save()
