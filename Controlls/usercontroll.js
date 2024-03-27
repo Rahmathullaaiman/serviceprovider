@@ -47,32 +47,30 @@ exports.registeruser = async (req, res) => {
 
 //login user
 
-exports.loginuser =async (req,res)=>{
-    const{email,password} = req.body
+exports.loginUser = async (req, res) => {
+    const { email, password } = req.body;
 
-   try{ 
-      const existuser =await users.findOne({email,password})
-    console.log(existuser);
+    try {
+        let token;
 
-    if(existuser){
-          //jwt token
-        //payload-information is secretely transmitted
-        //secret or private
-        const token = jwt.sign({userId:existuser._id},"supersecretkey")
+        if (email === 'admin@gmail.com' && password === 'admin') {
+            const adminUser = await users.findOne({ email, password });
+            token = jwt.sign({ userId: adminUser._id }, "supersecretkey");
+            return res.status(200).json({ adminUser, token });
+        }
 
-        res.status(200).json({
-            existuser,
-            token
-        })
+        const existingUser = await users.findOne({ email, password });
+
+        if (existingUser) {
+            token = jwt.sign({ userId: existingUser._id }, "supersecretkey");
+            return res.status(200).json({ existingUser, token });
+        } else {
+            return res.status(404).json('Invalid email or password');
+        }
+    } catch (err) {
+        return res.status(401).json(`Login request failed due to ${err}`);
     }
-    else{
-        res.status(404).json('invalid emailID or password')
-    }
-}catch(err){
-    res.status(401).json(`login request failed due to ${err}`);
-}
-}
-
+};
 
 
 

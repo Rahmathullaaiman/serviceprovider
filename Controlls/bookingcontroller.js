@@ -3,7 +3,7 @@ const bookings = require('../Modal/Booking')
 
 exports.bookingworker = async(req,res)=>{
 
-    const { date, service, location, locationURL } = req.body;
+    const { bookersusername,date, service, location, locationURL } = req.body;
     const { id } = req.params;
     const userId = req.payload;
     try {
@@ -13,7 +13,7 @@ exports.bookingworker = async(req,res)=>{
             return res.status(400).json({ message: "This worker is already booked for this date.Please choose another date" });
         }
         const newBooking = new bookings({
-            date, service, location, locationURL, userId, workerid: id, status: null
+            bookersusername,date, service, location, locationURL, userId, workerid: id, review: '', status: null
         });
         await newBooking.save();
         res.status(200).json(newBooking);
@@ -23,23 +23,6 @@ exports.bookingworker = async(req,res)=>{
     
 
 }
-
-//booking te worker
-
-// exports.bookingworker = async (req, res) => {
-//     const { date, service, location, locationURL, workerId } = req.body; 
-//     const userId = req.payload;
-//     try {
-//         const newBooking = new bookings({
-//             date, service, location, locationURL, workerid: workerId, userId, status: null
-//         });
-//         await newBooking.save();
-//         res.status(200).json(newBooking);
-//     } catch (error) {
-//         res.status(401).json(`Booking failed due to ${error}`);
-//     }
-// }
-
 
 //approving booking 
 exports.bookingapprove = async(req,res)=>{
@@ -99,3 +82,16 @@ exports.cancelbooking = async(req,res)=>{
         res.status(401).json(error)
     }
   }
+
+  //add review
+  exports.AddReview = async (req, res) => {
+    const { id, feedback } = req.body
+
+    try {
+        const workerreview = await bookings.updateOne({ _id: id }, { $set: { review: feedback } })
+        res.status(200).json(workerreview)
+    } catch (err) {
+        res.status(401).json(`Request failed due to ${err}`)
+    }
+
+}

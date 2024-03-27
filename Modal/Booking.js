@@ -3,7 +3,11 @@ const mongoose = require('mongoose')
 
 
 const BookingSchema = new mongoose.Schema({
-     date:{
+   bookersusername:{
+      type:String,
+      required:true
+   },   
+   date:{
         type:String,
         require:true
      },
@@ -27,6 +31,9 @@ const BookingSchema = new mongoose.Schema({
         type:String,
         require:true
      },
+     review:{
+      type:String
+   },
      status:{
         type:Boolean
      }
