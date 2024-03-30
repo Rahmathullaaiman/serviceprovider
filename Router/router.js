@@ -10,6 +10,8 @@ const wordcontroll = require('../Controlls/descriptions')
 
 const bookingcontroll = require('../Controlls/bookingcontroller')
 
+const chatcontroll = require('../Controlls/chatcontroll')
+
 
 
 const multerconfig = require('../Middlewares/multer')
@@ -80,6 +82,13 @@ router.delete('/delete/booking/:id',jwtmiddleware,bookingcontroll.cancelbooking)
 
 //add reviews
 router.post('/user/addreview',jwtmiddleware,bookingcontroll.AddReview)
+
+//chat
+router.post('/user/sendchat',jwtmiddleware,chatcontroll.sendMessage)
+//get message
+router.get('/getMessages/:userId1/:userId2',jwtmiddleware,chatcontroll.getMessages);
+
+
 
 
 

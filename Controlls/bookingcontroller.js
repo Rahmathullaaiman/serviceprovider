@@ -3,7 +3,7 @@ const bookings = require('../Modal/Booking')
 
 exports.bookingworker = async(req,res)=>{
 
-    const { bookersusername,date, service, location, locationURL } = req.body;
+    const { bookersusername,bookingworkername,date, service, location, locationURL } = req.body;
     const { id } = req.params;
     const userId = req.payload;
     try {
@@ -13,7 +13,7 @@ exports.bookingworker = async(req,res)=>{
             return res.status(400).json({ message: "This worker is already booked for this date.Please choose another date" });
         }
         const newBooking = new bookings({
-            bookersusername,date, service, location, locationURL, userId, workerid: id, review: '', status: null
+            bookersusername,bookingworkername,date, service, location, locationURL, userId, workerid: id, review: '', status: null
         });
         await newBooking.save();
         res.status(200).json(newBooking);

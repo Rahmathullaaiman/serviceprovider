@@ -1,12 +1,15 @@
 const mongoose = require('mongoose')
 
-
-
 const BookingSchema = new mongoose.Schema({
+  
    bookersusername:{
       type:String,
-      required:true
-   },   
+      require:true
+   },  
+   bookingworkername:{
+      type:String,
+      require:true
+   }, 
    date:{
         type:String,
         require:true
