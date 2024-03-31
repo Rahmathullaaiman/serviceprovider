@@ -1,13 +1,14 @@
 const words = require('../Modal/Descriptionschema')
 
 exports.descriptions = async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description,text } = req.body;
     const images = req.files.map(file => file.filename);     
     try {
         const newDescription = new words({
             title,
             images,
-            description
+            description,
+            text
         });
         await newDescription.save();
         res.status(200).json(newDescription);

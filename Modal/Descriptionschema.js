@@ -16,6 +16,10 @@ const discription = new mongoose.Schema({
         type:String,
         require:true
        
+    },
+    text:{
+        type:String,
+        require:true
     }
    
 

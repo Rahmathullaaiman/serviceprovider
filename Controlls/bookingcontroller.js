@@ -3,6 +3,9 @@ const bookings = require('../Modal/Booking')
 
 exports.bookingworker = async(req,res)=>{
 
+    console.log('inside booking worker');
+
+
     const { bookersusername,bookingworkername,date, service, location, locationURL } = req.body;
     const { id } = req.params;
     const userId = req.payload;
@@ -26,6 +29,8 @@ exports.bookingworker = async(req,res)=>{
 
 //approving booking 
 exports.bookingapprove = async(req,res)=>{
+    console.log('inside booking approve');
+
     const {id} = req.params
     try {
      const trueBook = await bookings.updateOne({_id:id},{$set:{status:true}})
@@ -38,6 +43,9 @@ exports.bookingapprove = async(req,res)=>{
 
  //cancel approve
  exports.bookingdecline = async(req,res)=>{
+
+    console.log('inside booking decline');
+
     const {id} = req.params
     try {
      const falseBook = await bookings.updateOne({_id:id},{$set:{status:false}})
@@ -50,6 +58,9 @@ exports.bookingapprove = async(req,res)=>{
  
  // get all bookings by worker id
 exports.getAllRequestsByWorkerId = async (req, res) => {
+
+    console.log('inside get all request workers');
+
     try {
         const allBookings = await bookings.find();
         res.status(200).json(allBookings);
@@ -60,6 +71,9 @@ exports.getAllRequestsByWorkerId = async (req, res) => {
 
 //get all bookings for user
 exports.getBookingsByUserId = async (req, res) => {
+
+    console.log('inside user request ');
+
     //const { userId } = req.params;
     const userId = req.payload
     try {
@@ -74,6 +88,9 @@ exports.getBookingsByUserId = async (req, res) => {
 //cancel booking
 
 exports.cancelbooking = async(req,res)=>{
+
+    console.log('inside cancel booking');
+
     const {id} = req.params
     try {
         const cancel = await bookings.findByIdAndDelete({_id:id})
@@ -85,6 +102,9 @@ exports.cancelbooking = async(req,res)=>{
 
   //add review
   exports.AddReview = async (req, res) => {
+
+    console.log('inside add review');
+
     const { id, feedback } = req.body
 
     try {

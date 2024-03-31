@@ -7,6 +7,9 @@ const jwt = require('jsonwebtoken')
 //register provider
 exports.Registerprovider = async(req,res)=>{
 
+  console.log('inside  register  worker');
+
+
     const {name,email,mobileno,district,worktype,description,password,price,organisation} = req.body
     const image = req.file.filename
     
@@ -32,14 +35,17 @@ exports.Registerprovider = async(req,res)=>{
 //login worker
 
 exports.workerLogin = async(req,res)=>{
+  
+  console.log('inside the worker login');
     const {email,password} = req.body
+    const logger = 'worker'
   
    try{ 
     const existworker = await providers.findOne({email,password})
   
     if(existworker){
       const token = jwt.sign({userid:existworker._id},"supersecretkey")
-      res.status(200).json({existworker,token})
+      res.status(200).json({existworker,token,logger})
     }
     else{
   res.status(404).json('Invalid email or password')
@@ -50,6 +56,8 @@ exports.workerLogin = async(req,res)=>{
 
   //get all providers
   exports.getAllWorkers = async(req,res)=>{
+    console.log('inside getall  worker');
+
     try {
      const allWorkers = await providers.find()
      res.status(200).json(allWorkers)
@@ -59,6 +67,8 @@ exports.workerLogin = async(req,res)=>{
   }
 
   exports.deleteWorker = async(req,res)=>{
+    console.log('inside delete worker');
+
     const {id} = req.params
     try {
         const removeWorker = await providers.findByIdAndDelete({_id:id})
@@ -70,6 +80,9 @@ exports.workerLogin = async(req,res)=>{
 
   //search workers
   exports.searchProviders = async (req, res) => {
+
+    console.log('inside search worker');
+
     
     const { worktype, district } = req.query;
 
@@ -88,6 +101,8 @@ exports.workerLogin = async(req,res)=>{
 
 //update worker details
 exports.editWorker = async(req,res)=>{
+  console.log('inside edit worker');
+
   const {id} = req.params
   const {name,mobileno,district,worktype,description,price,organisation} = req.body
   const uploadedimage = req.file?req.file.filename:image

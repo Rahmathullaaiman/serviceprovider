@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 
 //register user
 exports.registeruser = async (req, res) => {
-    console.log('register inside');
+    console.log('register user inside');
 
     const userimage = req.file.filename;
     console.log(userimage);
@@ -50,20 +50,24 @@ exports.registeruser = async (req, res) => {
 exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
 
+    console.log('inside the user login');
+
     try {
         let token;
+        let logger = 'user'
+        let admin='admin'
 
         if (email === 'admin@gmail.com' && password === 'admin') {
             const adminUser = await users.findOne({ email, password });
             token = jwt.sign({ userId: adminUser._id }, "supersecretkey");
-            return res.status(200).json({ adminUser, token });
+            return res.status(200).json({ adminUser, token,admin });
         }
 
         const existingUser = await users.findOne({ email, password });
 
         if (existingUser) {
             token = jwt.sign({ userId: existingUser._id }, "supersecretkey");
-            return res.status(200).json({ existingUser, token });
+            return res.status(200).json({ existingUser, token,logger });
         } else {
             return res.status(404).json('Invalid email or password');
         }
@@ -76,6 +80,7 @@ exports.loginUser = async (req, res) => {
 
 //get alluser
 exports.getAllusers = async(req,res)=>{
+    console.log('inside get all user');
     try {
      const allusers = await users.find()
      res.status(200).json(allusers)
@@ -86,6 +91,7 @@ exports.getAllusers = async(req,res)=>{
 
   //delete user
   exports.deleteuser = async(req,res)=>{
+    console.log('inside delete user');
     const {id} = req.params
     try {
         const deleteuser = await users.findByIdAndDelete({_id:id})
@@ -97,6 +103,8 @@ exports.getAllusers = async(req,res)=>{
 
   //edit user profile
   exports.edituser = async (req, res) => {
+    console.log('inside edit user');
+
     const { id } = req.params;
     const { name, userimage, address, contactnumber } = req.body;
     const uploadedimage = req.file ? req.file.filename : userimage;

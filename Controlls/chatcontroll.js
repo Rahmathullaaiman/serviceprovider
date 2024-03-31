@@ -2,6 +2,9 @@ const chats = require('../Modal/chatschema')
 
 
 exports.sendMessage = async (req, res) => {
+
+    console.log('inside chat send');
+
     const { senderId, receiverId, message } = req.body;
     try {
         const newMessage = new chats({ senderId, receiverId, message });
@@ -14,6 +17,9 @@ exports.sendMessage = async (req, res) => {
 
 
 exports.getMessages = async (req, res) => {
+
+    console.log('inside chat get');
+
     const { userId1, userId2 } = req.params;
     try {
         const messages = await chats.find({
