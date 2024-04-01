@@ -41,11 +41,11 @@ exports.workerLogin = async(req,res)=>{
     const logger = 'worker'
   
    try{ 
-    const existworker = await providers.findOne({email,password})
+    const existingUser = await providers.findOne({email,password})
   
-    if(existworker){
-      const token = jwt.sign({userid:existworker._id},"supersecretkey")
-      res.status(200).json({existworker,token,logger})
+    if(existingUser){
+      const token = jwt.sign({userid:existingUser._id},"supersecretkey")
+      res.status(200).json({existingUser,token,logger})
     }
     else{
   res.status(404).json('Invalid email or password')
@@ -104,11 +104,11 @@ exports.editWorker = async(req,res)=>{
   console.log('inside edit worker');
 
   const {id} = req.params
-  const {name,mobileno,district,worktype,description,price,organisation} = req.body
+  const {name,contactnumber,district,worktype,description,price,organisation} = req.body
   const uploadedimage = req.file?req.file.filename:image
 
   try {
-      const updateWorker = await providers.findByIdAndUpdate({_id:id},{name,mobileno,image:uploadedimage,district,worktype,description,price,organisation
+      const updateWorker = await providers.findByIdAndUpdate({_id:id},{name,contactnumber,userimage:uploadedimage,district,worktype,description,price,organisation
       },{new:true})
 
       await updateWorker.save()

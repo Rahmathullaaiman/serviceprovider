@@ -12,11 +12,11 @@ const providerSchema = new mongoose.Schema({
         type:String,
         require:true
      },
-     mobileno:{
+     contactnumber:{
         type:Number,
         require:true
      },
-     image:{
+     userimage:{
         type:String,
         require:true
      },

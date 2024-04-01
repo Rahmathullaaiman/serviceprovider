@@ -30,7 +30,7 @@ router.post('/user/register',multerconfig.single('userimage'), usercontroll.regi
 router.post('/user/login', usercontroll.loginUser)
 
 //service provider register
-router.post('/provider/register',multerconfig.single('image'),providercontroll.Registerprovider)
+router.post('/provider/register',multerconfig.single('userimage'),providercontroll.Registerprovider)
 
 //service provider login
 router.post('/provider/login',providercontroll.workerLogin)
@@ -72,7 +72,7 @@ router.get('/getAllRequestsByworker',jwtmiddleware,bookingcontroll.getAllRequest
 router.get('/getBookingsByUserId',jwtmiddleware,bookingcontroll.getBookingsByUserId); 
 
 //edit the worker
-router.put('/worker/update/:id',jwtmiddleware,multerconfig.single('image'),providercontroll.editWorker)
+router.put('/worker/update/:id',jwtmiddleware,multerconfig.single('userimage'),providercontroll.editWorker)
 
 //edit user
 router.put('/user/update/:id',jwtmiddleware,multerconfig.single('userimage'),usercontroll.edituser)
