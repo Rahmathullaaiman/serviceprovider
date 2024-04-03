@@ -10,8 +10,8 @@ exports.Registerprovider = async(req,res)=>{
   console.log('inside  register  worker');
 
 
-    const {name,email,mobileno,district,worktype,description,password,price,organisation} = req.body
-    const image = req.file.filename
+    const {name,email,contactnumber,district,worktype,description,password,price,organisation} = req.body
+    const userimage = req.file.filename
     
     try {
         const provider = await providers.findOne({email})
@@ -20,7 +20,7 @@ exports.Registerprovider = async(req,res)=>{
         }
         else{
             const newprovider = new providers({
-                name,email,mobileno,image,district,worktype,description,password,price,organisation
+                name,email,contactnumber,userimage,district,worktype,description,password,price,organisation
             })
             await newprovider.save()
             res.status(200).json(newprovider)
@@ -116,4 +116,19 @@ exports.editWorker = async(req,res)=>{
   } catch (error) {
       res.status(401).json(error)
   }
+}
+
+exports.getbyworktype=async(req,res)=>{
+  console.log('inside the users by getting works');
+
+  const {worktype}= req.params
+
+ try {
+  const getworker = await providers.find({worktype:worktype})
+  res.status(200).json(getworker)
+ } catch (error) {
+  res.status(400).json(error)
+  
+ }
+
 }

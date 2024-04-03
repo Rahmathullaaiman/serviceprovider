@@ -39,6 +39,20 @@ const BookingSchema = new mongoose.Schema({
    },
      status:{
         type:Boolean
+     },
+     workstatus:{
+      type:Boolean
+   },
+     time:{
+          type:String,
+        require:true
+     },
+     price:{
+      type:String,
+      require:true
+     },
+     payment:{
+      type:Boolean
      }
 })
 

@@ -6,17 +6,17 @@ exports.bookingworker = async(req,res)=>{
     console.log('inside booking worker');
 
 
-    const { bookersusername,bookingworkername,date, service, location, locationURL } = req.body;
+    const { bookersusername,bookingworkername,date,time, service, location, locationURL,price,payment,workstatus } = req.body;
     const { id } = req.params;
     const userId = req.payload;
     try {
         const existingBooking = await bookings.findOne({ date, workerid: id });
     
         if (existingBooking) {
-            return res.status(400).json({ message: "This worker is already booked for this date.Please choose another date" });
+            return res.status(250).json({ message: "This worker is already booked for this date.Please choose another date" });
         }
         const newBooking = new bookings({
-            bookersusername,bookingworkername,date, service, location, locationURL, userId, workerid: id, review: '', status: null
+            bookersusername,bookingworkername,date,time, service, location, locationURL,price,payment:null, userId, workerid: id, review: '', status: null,workstatus:true
         });
         await newBooking.save();
         res.status(200).json(newBooking);
@@ -55,14 +55,39 @@ exports.bookingapprove = async(req,res)=>{
     }
  }
 
- 
+ exports.Workdone = async(req,res)=>{
+    console.log('inside workdone approve');
+
+    const {id} = req.params
+    try {
+     const trueBook = await bookings.updateOne({_id:id},{$set:{workstatus:true}})
+     console.log(trueBook);
+     res.status(200).json(trueBook)
+    } catch (err) {
+     res.status(401).json(`Request failed due to ${err}`)
+    }
+ }
+//  payment
+ exports.paymentdone = async(req,res)=>{
+    console.log('inside payment ');
+
+    const {id} = req.params
+    try {
+     const trueBook = await bookings.updateOne({_id:id},{$set:{payment:true}})
+     console.log(trueBook);
+     res.status(200).json(trueBook)
+    } catch (err) {
+     res.status(401).json(`Request failed due to ${err}`)
+    }
+ }
  // get all bookings by worker id
 exports.getAllRequestsByWorkerId = async (req, res) => {
 
     console.log('inside get all request workers');
-
+    const {workerid} = req.params
+    console.log(workerid);
     try {
-        const allBookings = await bookings.find();
+        const allBookings = await bookings.find({workerid:workerid});
         res.status(200).json(allBookings);
     } catch (err) {
         res.status(401).json(`Request failed due to ${err}`);
@@ -71,7 +96,6 @@ exports.getAllRequestsByWorkerId = async (req, res) => {
 
 //get all bookings for user
 exports.getBookingsByUserId = async (req, res) => {
-
     console.log('inside user request ');
 
     //const { userId } = req.params;
@@ -102,13 +126,12 @@ exports.cancelbooking = async(req,res)=>{
 
   //add review
   exports.AddReview = async (req, res) => {
-
+const id = req.params
     console.log('inside add review');
-
-    const { id, feedback } = req.body
+    const {review} = req.body
 
     try {
-        const workerreview = await bookings.updateOne({ _id: id }, { $set: { review: feedback } })
+        const workerreview = await bookings.updateOne({ _id: id }, { $set: { review: review } })
         res.status(200).json(workerreview)
     } catch (err) {
         res.status(401).json(`Request failed due to ${err}`)
