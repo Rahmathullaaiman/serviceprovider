@@ -87,7 +87,7 @@ router.put('/user/update/:id',jwtmiddleware,multerconfig.single('userimage'),use
 router.delete('/delete/booking/:id',jwtmiddleware,bookingcontroll.cancelbooking)
 
 //add reviews
-router.post('/user/addreview/:id',jwtmiddleware,bookingcontroll.AddReview)
+router.post('/user/addreview/:id',bookingcontroll.AddReview)
 
 //chat
 router.post('/user/sendchat',jwtmiddleware,chatcontroll.sendMessage)

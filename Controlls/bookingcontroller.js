@@ -126,15 +126,19 @@ exports.cancelbooking = async(req,res)=>{
 
   //add review
   exports.AddReview = async (req, res) => {
-const id = req.params
-    console.log('inside add review');
-    const {review} = req.body
-
-    try {
-        const workerreview = await bookings.updateOne({ _id: id }, { $set: { review: review } })
-        res.status(200).json(workerreview)
-    } catch (err) {
-        res.status(401).json(`Request failed due to ${err}`)
-    }
-
-}
+      const id = req.params.id; // Assuming your route parameter is 'id'
+      console.log('inside add review');
+      const { feedback } = req.body;
+  
+      console.log(id, feedback);
+      try {
+          const workerReview = await bookings.updateOne(
+              { _id: id }, // Filter based on the booking ID
+              { $set: { review: feedback } } // Update to add review
+          );
+          res.status(200).json(workerReview);
+      } catch (err) {
+          res.status(401).json(`Request failed due to ${err}`);
+      }
+  };
+  
