@@ -12,6 +12,7 @@ const bookingcontroll = require('../Controlls/bookingcontroller')
 
 const chatcontroll = require('../Controlls/chatcontroll')
 
+const packagecontroll = require('../Controlls/packagecontroll')
 
 
 const multerconfig = require('../Middlewares/multer')
@@ -63,13 +64,15 @@ router.post('/user/booking/:id',jwtmiddleware,bookingcontroll.bookingworker)
 router.put('/worker/approvetrue/:id',jwtmiddleware,bookingcontroll.bookingapprove)
 
 // workdone
-router.put('/worker/workdone/:id',jwtmiddleware,bookingcontroll.Workdone)
+router.post('/worker/workdone/:id',jwtmiddleware,bookingcontroll.Workdone)
+// workdone
+router.post('/work/start/:id',jwtmiddleware,bookingcontroll.startwork)
 
 // payment
 router.put('/worker/payment/:id',jwtmiddleware,bookingcontroll.paymentdone)
 
 //decline booking
-router.put('/worker/approvefalse/:id',jwtmiddleware,bookingcontroll.bookingdecline)
+router.post('/worker/approvefalse/:id',jwtmiddleware,bookingcontroll.bookingdecline)
 
 //get all booking requests
 router.get('/getAllRequestsByworker/:workerid',jwtmiddleware,bookingcontroll.getAllRequestsByWorkerId); 
@@ -97,8 +100,12 @@ router.get('/getMessages/:userId1/:userId2',jwtmiddleware,chatcontroll.getMessag
 router.get('/getbyworktype/:worktype',providercontroll.getbyworktype)
 
 
-
-
+//add package
+router.post('/addpackage/:id',jwtmiddleware,multerconfig.single('workimage'),packagecontroll.Addpackage);
+//add to booking as package
+router.post('/packagebooking/:id',jwtmiddleware,packagecontroll.CreateBooking);
+//get all packages
+router.get('/getallpackages',packagecontroll.getAllpackages)
 
 
 

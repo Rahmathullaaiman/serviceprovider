@@ -4,35 +4,27 @@ const BookingSchema = new mongoose.Schema({
   
    bookersusername:{
       type:String,
-      require:true
    },  
    bookingworkername:{
       type:String,
-      require:true
    }, 
    date:{
         type:String,
-        require:true
      },
      service:{
         type:String,
-        require:true
      },
      location:{
         type:String,
-        require:true
      },
      locationURL:{
       type:String,
-      require:true
      },
      userId:{
         type:String,
-        require:true
      },
      workerid:{
         type:String,
-        require:true
      },
      review:{
       type:String
@@ -41,19 +33,27 @@ const BookingSchema = new mongoose.Schema({
         type:Boolean
      },
      workstatus:{
-      type:Boolean
+      type:String
    },
      time:{
           type:String,
         require:true
      },
-     price:{
-      type:String,
-      require:true
-     },
      payment:{
       type:Boolean
-     }
+     },
+     package: {
+      type: String
+  },
+  packageid: {
+    type: String
+},
+  description: {
+      type: String
+  },
+  price: {
+      type: Number
+  }
 })
 
 

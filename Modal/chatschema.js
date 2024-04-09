@@ -20,3 +20,12 @@ const chatSchema = new mongoose.Schema({
 const chats = mongoose.model("chats",chatSchema)
 
 module.exports = chats
+
+
+
+
+
+
+
+
+
