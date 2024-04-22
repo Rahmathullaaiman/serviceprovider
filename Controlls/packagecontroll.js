@@ -80,11 +80,24 @@ exports.CreateBooking = async (req, res) => {
 
 //get all packages
 exports.getAllpackages = async (req, res) => {
-
-    console.log('inside get all request workers');
+    const {id} = req.params
+    console.log('inside get all packages');
 
     try {
-        const allpackages = await packages.find();
+        const allpackages = await packages.find({workerid:id});
+        res.status(200).json(allpackages);
+    } catch (err) {
+        res.status(401).json(Request` failed due to ${err}`);
+    }
+}
+
+//get all packages
+exports.deletepackage = async (req, res) => {
+    const {id} = req.params
+    console.log('inside delete package');
+
+    try {
+        const allpackages = await packages.findByIdAndDelete({_id:id});
         res.status(200).json(allpackages);
     } catch (err) {
         res.status(401).json(Request` failed due to ${err}`);
