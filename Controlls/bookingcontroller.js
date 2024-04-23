@@ -121,7 +121,17 @@ exports.getBookingsByUserId = async (req, res) => {
     }
 }
 
-
+exports.getAllreviewsforadmin = async (req, res) => {
+    console.log('inside all reviews for admin');
+    const id = req.params;
+    console.log(id.id);
+    try {
+        const userBookings = await bookings.find({workerid:id.id});
+        res.status(200).json(userBookings);
+    } catch (err) {
+        res.status(401).json(`Request failed due to ${err}`);
+    }
+}
 //cancel booking
 
 exports.cancelbooking = async(req,res)=>{

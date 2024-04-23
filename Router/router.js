@@ -80,6 +80,9 @@ router.get('/getAllRequestsByworker/:workerid',jwtmiddleware,bookingcontroll.get
 //get all bookings for user
 router.get('/getBookingsByUserId',jwtmiddleware,bookingcontroll.getBookingsByUserId); 
 
+// get reviews for admin
+router.get('/getreviewsforadmin/:id',bookingcontroll.getAllreviewsforadmin); 
+
 //edit the worker
 router.put('/worker/update/:id',jwtmiddleware,multerconfig.single('userimage'),providercontroll.editWorker)
 
