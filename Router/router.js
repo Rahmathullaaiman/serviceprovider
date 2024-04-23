@@ -105,7 +105,8 @@ router.post('/addpackage/:id',jwtmiddleware,multerconfig.single('workimage'),pac
 //add to booking as package
 router.post('/packagebooking/:id',jwtmiddleware,packagecontroll.CreateBooking);
 //get all packages
-router.get('/getallpackages/:id',packagecontroll.getAllpackages)
+router.get('/getallpackages',packagecontroll.getAllpackages)
+router.get('/worker/getallpackages/:id',packagecontroll.getAllWpackages)
 //Delete package
 router.delete('/delete/package/:id',jwtmiddleware,packagecontroll.deletepackage)
 

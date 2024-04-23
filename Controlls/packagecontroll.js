@@ -79,7 +79,7 @@ exports.CreateBooking = async (req, res) => {
 }
 
 //get all packages
-exports.getAllpackages = async (req, res) => {
+exports.getAllWpackages = async (req, res) => {
     const {id} = req.params
     console.log('inside get all packages');
 
@@ -90,8 +90,18 @@ exports.getAllpackages = async (req, res) => {
         res.status(401).json(Request` failed due to ${err}`);
     }
 }
+exports.getAllpackages = async (req, res) => {
+    const {id} = req.params
+    console.log('inside get all packages');
 
-//get all packages
+    try {
+        const allpackages = await packages.find();
+        res.status(200).json(allpackages);
+    } catch (err) {
+        res.status(401).json(Request` failed due to ${err}`);
+    }
+}
+//delete packages
 exports.deletepackage = async (req, res) => {
     const {id} = req.params
     console.log('inside delete package');
